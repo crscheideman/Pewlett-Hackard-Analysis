@@ -31,3 +31,19 @@ FROM employees AS e
 WHERE (e.birth_data BETWEEN '1965-01-01' AND '1965-12-31') AND (de.to_date = '9999-01-01')
 ORDER BY emp_no;
 	
+SELECT COUNT(ut.emp_no) AS retiring_emp,
+	COUNT(me.emp_no) AS mentor_emp,
+	COUNT(ut.emp_no) - COUNT(me.emp_no) AS difference
+FROM unique_titles AS ut
+	FULL OUTER JOIN mentorship_eligibility AS me
+	ON (me.emp_no = ut.emp_no)
+
+SELECT SUM(count)
+FROM retiring_titles
+
+-- # of retiring employees by job title
+SELECT COUNT (title), title
+--INTO mentorship_titles
+FROM mentorship_eligibility
+GROUP BY title
+ORDER BY count DESC
